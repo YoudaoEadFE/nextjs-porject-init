@@ -31,10 +31,10 @@ const BackstageLayout: React.FC<BackstageLayoutProps> = ({
   const { role: encRole, token, email } = JSON.parse(D_USER_STR);
   const role = aes().decrypt(encRole ?? '');
   const menuOptions = roleMenu[role] || [];
-  const userName = email ?? '暂未设置优选昵称';
+  const userName = email ?? '暂未设置昵称';
 
   const getUsername = () => {
-    return email ?? '暂未设置优选昵称';
+    return email ?? '暂未设置昵称';
   };
 
   return (
