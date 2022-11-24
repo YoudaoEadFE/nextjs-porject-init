@@ -177,9 +177,7 @@ async function request<T>(url: string, config: RequestConfig): Promise<T> {
 
 // 请求带上token
 export function setAuth({ token }: { token: string }) {
-  instance.defaults.headers.common['youxuan-user'] = '';
-  delete instance.defaults.headers.common['youxuan-user'];
-  instance.defaults.headers.common['youxuan-user'] = token;
+  instance.defaults.headers.common['xxxxx'] = token;
 }
 
 const api =  {

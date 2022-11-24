@@ -14,7 +14,7 @@ export const keyToValue = (obj: Record<string, number | string>) => {
 
 // aes加密
 export function aes() {
-  const secretKey = 'youxuan-luo';
+  const secretKey = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
   return {
     encrypt: (str: string) => AES.encrypt(str, secretKey).toString(),
     decrypt: (str: string) => AES.decrypt(str, secretKey).toString(enc.Utf8),

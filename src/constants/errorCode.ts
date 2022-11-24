@@ -1,6 +1,3 @@
-/** 获取错误码的后端git地址
- *  https: // gitlab.corp.youdao.com/ead/youxuan/-/blob/youxuan-3.0/src/main/java/outfox/ead/youxuan/constants/ResponseType.java
- */
 import { keyToValue } from '@/utils/util';
 
 export const ERRORCODE = {
