@@ -10,7 +10,7 @@ import {
   isNoLoginPage,
   setAuth,
 } from '@/utils';
-import authRouter from '@/utils/authRouter'
+import authRouter from '@/utils/authRoute'
 import styles from './styles/mainLayout.module.less'
 import BackstageLayout from './BackstageLayout';
 
@@ -48,8 +48,8 @@ const Child: React.FC<IProps> = props => {
     router.push('/login');
   };
 
-  // 登录注册页 layout
-  if (pathname.startsWith('/login') || pathname.startsWith('/register')) {
+  // fullscreen layout
+  if (pathname.startsWith('/login') || pathname.startsWith('/register') || ['/404', '/403'].includes(pathname)) {
     return (
       <Layout className="layout" style={{ height: '100vh' }}>
         <HtmlMeta title="管理平台" />
@@ -65,70 +65,14 @@ const Child: React.FC<IProps> = props => {
 // 用ant design的layout
 export const MainLayout: React.FC<IProps> = props => {
   const [showChild, setShowChild] = React.useState(false);
-  const [isNoAccess, setNoAccess] = React.useState(false);
 
-  const router = useRouter();
-  const { asPath, pathname } = router;
-
-  // Wait until after client-side hydration to show
   useEffect(() => {
-    const notFindPage = pathname === '/_error' || (pathname === '/404' && pathname !== asPath); // 此路径下无页面
-    if (pathname === '/403' || notFindPage) {
-      setNoAccess(true);
-    } else {
-      setNoAccess(false);
-    }
-
-
-    if (pathname === '/') {
-      router.replace('/login').then(() => {
-        setShowChild(true);
-      });
-      return;
-    }
-
-    const authCookie = cookie.get('D_USER');
-    const { role: encryptedRole, token, userId, email } = JSON.parse(authCookie || '{}');
-    const role = encryptedRole && aes().decrypt(encryptedRole);
-
-    setAuth({ token });
-
-    // 无需登录的页面
-    const isNoLogin = isNoLoginPage(pathname);
-
-    // 如果有登录态
-    if (authCookie) {
-      // 查看该登录用户是否有访问此路由的权限
-      const { isAuthRouter } = authRouter(role, pathname);
-      if (!notFindPage && !isNoLogin && !isAuthRouter) {
-        // 用户角色无权限重定向至403页面
-        router.replace('/403').then(() => {
-          setShowChild(true);
-        });
-      } else {
-        setShowChild(true);
-      }
-    } else {
-      // 没有登录情况
-      // 非登录状态只能进入NoLoginPage， 否则重定向至login页面
-      if (!isNoLogin) {
-        router.replace('/login').then(() => {
-          setShowChild(true);
-        });
-      } else {
-        setShowChild(true);
-      }
-    }
-  }, [pathname]);
+    setShowChild(true);
+  }, [])
 
   if (!showChild) {
     // You can show some kind of placeholder UI here
     return null;
-  }
-
-  if (isNoAccess) {
-    // only show (404、403、introdece) page without layout
-    return <div>{props.children}</div>;
   }
 
   // eslint-disable-next-line react/jsx-props-no-spreading

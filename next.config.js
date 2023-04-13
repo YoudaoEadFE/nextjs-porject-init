@@ -69,6 +69,6 @@ module.exports = withAntdLess({
     // The expiration (or rather Max Age)
     minimumCacheTTL: 60,
     //  a list of allowed hostnames for external images
-    domains: ['shared.ydstatic.com'],
+    domains: [],
   },
 });
